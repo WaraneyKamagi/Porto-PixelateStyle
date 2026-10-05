@@ -8,7 +8,7 @@ import { LOCATIONS } from '../../data/locations';
 interface BlackHoleProps {
   x?: number;
   y?: number;
-  onTeleport: (msg: string) => void;
+  onTeleport: (msg: string, destX: number, destY: number) => void;
 }
 
 export const BlackHole: React.FC<BlackHoleProps> = ({
@@ -45,14 +45,18 @@ export const BlackHole: React.FC<BlackHoleProps> = ({
             soundFX.playVortex();
           }
 
+          // Pick a random safe location (e.g. Launch Pad, Planet Asal, or Gugus Planet)
           const safeLocs = LOCATIONS.slice(0, 3);
           const targetLoc = safeLocs[Math.floor(Math.random() * safeLocs.length)];
 
           setTimeout(() => {
+            // Eject ship to target location
             state.setShipPos(targetLoc.x, targetLoc.y);
             isSuckedRef.current = false;
             onTeleportRef.current(
-              `🌀 SINGULARITAS RUANG-WAKTU! Kamu tersedot ke dalam lubang hitam dan terlempar keluar melalui jembatan Einstein-Rosen ke ${targetLoc.name}! Semua sistem navigasi telah dikalibrasi ulang.`
+              `🌀 SINGULARITAS RUANG-WAKTU! Kamu tersedot ke dalam lubang hitam dan terlempar keluar melalui jembatan Einstein-Rosen ke ${targetLoc.name}! Semua sistem navigasi telah dikalibrasi ulang.`,
+              targetLoc.x,
+              targetLoc.y
             );
           }, 700);
         }

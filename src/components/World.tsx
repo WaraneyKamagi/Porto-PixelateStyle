@@ -82,7 +82,7 @@ export const World: React.FC = () => {
 
   // Check proximity to any location for the docking prompt
   const nearestLocation = LOCATIONS.find(
-    (loc) => getDistance(shipX, shipY, loc.x, loc.y) < 160
+    (loc) => loc.id !== 'singularity' && getDistance(shipX, shipY, loc.x, loc.y) < 160
   );
 
   // Smooth camera follow for keyboard flight
@@ -123,7 +123,12 @@ export const World: React.FC = () => {
         setShipPos(targetX, targetY);
         setActiveLocationId(targetLoc.id);
         centerOn(targetX, targetY, !isReducedMotion);
-        setActivePanel(targetLoc.id);
+        // Only open dialog panel if the sector is an actual content panel
+        if (targetLoc.id !== 'singularity') {
+          setActivePanel(targetLoc.id);
+        } else {
+          setActivePanel(null);
+        }
         if (!isSoundMuted) {
           soundFX.playSelect();
         }
@@ -165,7 +170,12 @@ export const World: React.FC = () => {
           setThrusting(false);
           setTraveling(false);
           setActiveLocationId(targetLoc.id);
-          setActivePanel(targetLoc.id);
+          // Only open dialog panel if the sector is an actual content panel
+          if (targetLoc.id !== 'singularity') {
+            setActivePanel(targetLoc.id);
+          } else {
+            setActivePanel(null);
+          }
           if (!isSoundMuted) {
             soundFX.playSelect();
           }
@@ -192,6 +202,7 @@ export const World: React.FC = () => {
       viewport.height,
       worldX,
       worldY,
+      isReducedMotion,
     ]
   );
 
@@ -206,7 +217,11 @@ export const World: React.FC = () => {
     onFollowShip: handleFollowShip,
     onInteract: (loc) => {
       setActiveLocationId(loc.id);
-      setActivePanel(loc.id);
+      if (loc.id !== 'singularity') {
+        setActivePanel(loc.id);
+      } else {
+        setActivePanel(null);
+      }
       if (!isSoundMuted) {
         soundFX.playSelect();
       }
@@ -222,6 +237,9 @@ export const World: React.FC = () => {
       if (!isSoundMuted) {
         soundFX.playClose();
       }
+    },
+    onRecenter: () => {
+      centerOn(shipX, shipY, true);
     },
   });
 
@@ -263,8 +281,8 @@ export const World: React.FC = () => {
           }}
         />
 
-        {/* Universe Locations */}
-        {LOCATIONS.map((loc) => (
+        {/* Universe Locations (Exclude singularity here to avoid duplicate black hole sprite) */}
+        {LOCATIONS.filter((loc) => loc.id !== 'singularity').map((loc) => (
           <LocationMarker
             key={loc.id}
             location={loc}
@@ -289,7 +307,9 @@ export const World: React.FC = () => {
 
         {/* Easter Egg: Gravitational Singularity Black Hole */}
         <BlackHole
-          onTeleport={(msg) => {
+          onTeleport={(msg, destX, destY) => {
+            setActiveLocationId(null);
+            setActivePanel(null);
             setEasterEgg({
               isOpen: true,
               title: 'WORMHOLE TELEPORTATION!',
@@ -298,7 +318,8 @@ export const World: React.FC = () => {
               bonus: '+750 SPACE LORE',
               accentColor: '#ff3864',
             });
-            centerOn(shipX, shipY, true);
+            // Center camera directly on ship's new destination
+            centerOn(destX, destY, true);
           }}
         />
 
@@ -312,7 +333,11 @@ export const World: React.FC = () => {
           onInteract={() => {
             if (nearestLocation) {
               setActiveLocationId(nearestLocation.id);
-              setActivePanel(nearestLocation.id);
+              if (nearestLocation.id !== 'singularity') {
+                setActivePanel(nearestLocation.id);
+              } else {
+                setActivePanel(null);
+              }
               if (!isSoundMuted) {
                 soundFX.playSelect();
               }
@@ -352,6 +377,9 @@ export const World: React.FC = () => {
           centerOn(nx, ny, true);
         }}
         onFastTravel={triggerFastTravel}
+        onRecenterShip={() => {
+          centerOn(shipX, shipY, true);
+        }}
       />
 
       {/* 7. Sector Location Dialog Panels (AnimatePresence) */}

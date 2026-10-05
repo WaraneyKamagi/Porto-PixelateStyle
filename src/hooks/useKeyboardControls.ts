@@ -7,12 +7,14 @@ interface KeyboardControlsOptions {
   onFollowShip?: (x: number, y: number) => void;
   onInteract?: (loc: LocationItem) => void;
   onEscape?: () => void;
+  onRecenter?: () => void;
 }
 
 export function useKeyboardControls({
   onFollowShip,
   onInteract,
   onEscape,
+  onRecenter,
 }: KeyboardControlsOptions = {}) {
   const {
     shipX,
@@ -49,6 +51,10 @@ export function useKeyboardControls({
 
       if (e.code === 'Escape') {
         onEscape?.();
+      }
+
+      if (e.code === 'KeyC') {
+        onRecenter?.();
       }
 
       if (e.code === 'Enter' || e.code === 'Space') {
@@ -118,5 +124,5 @@ export function useKeyboardControls({
       window.removeEventListener('keyup', handleKeyUp);
       cancelAnimationFrame(animId);
     };
-  }, [isTraveling, isPlainMode, hasGameStarted, onFollowShip, onInteract, onEscape, setShipPos, setShipRotation, setThrusting]);
+  }, [isTraveling, isPlainMode, hasGameStarted, onFollowShip, onInteract, onEscape, onRecenter, setShipPos, setShipRotation, setThrusting]);
 }

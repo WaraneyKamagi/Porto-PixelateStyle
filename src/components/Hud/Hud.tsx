@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGameStore } from '../../store/useGameStore';
-import { Volume2, VolumeX, Compass, MapPin } from 'lucide-react';
+import { Volume2, VolumeX, Compass, MapPin, Navigation } from 'lucide-react';
 import { soundFX } from '../../lib/audio';
 import { Minimap } from '../Minimap/Minimap';
 import { FastTravel } from '../FastTravel/FastTravel';
@@ -14,6 +14,7 @@ interface HudProps {
   viewportHeight: number;
   onNavigateToCoords: (x: number, y: number) => void;
   onFastTravel: (loc: LocationItem) => void;
+  onRecenterShip?: () => void;
 }
 
 export const Hud: React.FC<HudProps> = ({
@@ -24,6 +25,7 @@ export const Hud: React.FC<HudProps> = ({
   viewportHeight,
   onNavigateToCoords,
   onFastTravel,
+  onRecenterShip,
 }) => {
   const {
     isSoundMuted,
@@ -37,6 +39,13 @@ export const Hud: React.FC<HudProps> = ({
     if (isSoundMuted) {
       setTimeout(() => soundFX.playSelect(), 50);
     }
+  };
+
+  const handleRecenter = () => {
+    if (!isSoundMuted) {
+      soundFX.playBlip();
+    }
+    onRecenterShip?.();
   };
 
   return (
@@ -68,6 +77,18 @@ export const Hud: React.FC<HudProps> = ({
               {activeLocationName}
             </span>
           </div>
+
+          {/* Quick Recenter Button */}
+          {onRecenterShip && (
+            <button
+              onClick={handleRecenter}
+              className="mt-2 w-full pixel-btn text-[9px] py-1 px-1.5 flex items-center justify-center gap-1.5 bg-[#1b163a] hover:bg-[#2a2050] text-[#38efdf] border border-[#38efdf]"
+              title="Pusatkan kamera kembali ke pesawat penjelajah"
+            >
+              <Navigation size={11} className="text-[#ffde59]" />
+              <span>TARGET SHIP</span>
+            </button>
+          )}
         </div>
 
         {/* Top Right: System Controls (Audio & Plain Mode) */}
@@ -120,9 +141,9 @@ export const Hud: React.FC<HudProps> = ({
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[#ff73c2] font-pixel text-[8px] px-1 bg-[#1b163a] border border-[#ff73c2]">
-              ENTER / TAP
+              TARGET SHIP
             </span>
-            <span>Interaksi saat mendekati sektor</span>
+            <span>Klik tombol radar untuk memusatkan pesawat</span>
           </div>
         </div>
 
