@@ -1,0 +1,256 @@
+@import "tailwindcss";
+
+:root {
+  /* 16-Color Galactic Pixel Art Palette */
+  --space-black: #090714;
+  --space-dark: #0f0d24;
+  --space-mid: #1b163a;
+  --space-deep: #2a2050;
+  --cosmic-purple: #4d3280;
+  --cosmic-violet: #794cb5;
+  --neon-cyan: #38efdf;
+  --neon-blue: #29a4ff;
+  --neon-magenta: #ff389b;
+  --neon-pink: #ff73c2;
+  --retro-yellow: #ffde59;
+  --retro-amber: #ff9f24;
+  --retro-red: #ff3864;
+  --pixel-white: #f5f6ff;
+  --pixel-gray: #9fa6cc;
+  --pixel-darkgray: #41476e;
+
+  /* Font mappings */
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-reading: 'VT323', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -webkit-font-smoothing: none;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--space-black);
+  color: var(--pixel-white);
+  font-family: var(--font-pixel);
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%2338efdf' d='M0 0v16l4-4 3 7 3-1-3-7 6 0z'/%3E%3Cpath fill='%23090714' d='M1 2v12l3-3 3 7 1-0.3-3-7 4.5 0z'/%3E%3C/svg%3E"), auto;
+}
+
+/* Typography Helpers */
+.font-pixel {
+  font-family: var(--font-pixel);
+}
+
+.font-reading {
+  font-family: var(--font-reading);
+}
+
+/* 16-Bit Retro Pixel Panels & Borders */
+/* Authentic stepped pixel borders using multi-layered box-shadow */
+.pixel-panel {
+  position: relative;
+  background-color: var(--space-dark);
+  box-shadow: 
+    0 -4px 0 0 var(--space-black),
+    0 4px 0 0 var(--space-black),
+    -4px 0 0 0 var(--space-black),
+    4px 0 0 0 var(--space-black),
+    0 -8px 0 0 var(--cosmic-purple),
+    0 8px 0 0 var(--cosmic-purple),
+    -8px 0 0 0 var(--cosmic-purple),
+    8px 0 0 0 var(--cosmic-purple);
+  margin: 8px;
+}
+
+.pixel-panel-cyan {
+  position: relative;
+  background-color: var(--space-dark);
+  box-shadow: 
+    0 -4px 0 0 var(--space-black),
+    0 4px 0 0 var(--space-black),
+    -4px 0 0 0 var(--space-black),
+    4px 0 0 0 var(--space-black),
+    0 -8px 0 0 var(--neon-cyan),
+    0 8px 0 0 var(--neon-cyan),
+    -8px 0 0 0 var(--neon-cyan),
+    8px 0 0 0 var(--neon-cyan);
+  margin: 8px;
+}
+
+.pixel-box-sm {
+  background-color: var(--space-mid);
+  box-shadow: 
+    0 -3px 0 0 var(--space-black),
+    0 3px 0 0 var(--space-black),
+    -3px 0 0 0 var(--space-black),
+    3px 0 0 0 var(--space-black),
+    0 0 0 1px var(--pixel-darkgray);
+}
+
+.pixel-btn {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  background-color: var(--cosmic-purple);
+  color: var(--pixel-white);
+  padding: 8px 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 
+    0 -3px 0 0 var(--space-black),
+    0 3px 0 0 var(--space-black),
+    -3px 0 0 0 var(--space-black),
+    3px 0 0 0 var(--space-black),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.4),
+    inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.05s steps(2);
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffde59' d='M0 0v16l4-4 3 7 3-1-3-7 6 0z'/%3E%3C/svg%3E"), pointer;
+}
+
+.pixel-btn:hover {
+  background-color: var(--cosmic-violet);
+  box-shadow: 
+    0 -3px 0 0 var(--space-black),
+    0 3px 0 0 var(--space-black),
+    -3px 0 0 0 var(--space-black),
+    3px 0 0 0 var(--space-black),
+    0 0 0 2px var(--neon-cyan),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.4),
+    inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.pixel-btn:active {
+  transform: translateY(2px);
+  box-shadow: 
+    0 -3px 0 0 var(--space-black),
+    0 3px 0 0 var(--space-black),
+    -3px 0 0 0 var(--space-black),
+    3px 0 0 0 var(--space-black),
+    inset 2px 2px 0 0 rgba(0, 0, 0, 0.6);
+}
+
+.pixel-btn-cyan {
+  background-color: var(--neon-cyan);
+  color: var(--space-black);
+}
+
+.pixel-btn-cyan:hover {
+  background-color: #6ef5e9;
+  color: var(--space-black);
+}
+
+.pixel-btn-magenta {
+  background-color: var(--neon-magenta);
+  color: var(--pixel-white);
+}
+
+.pixel-btn-magenta:hover {
+  background-color: var(--neon-pink);
+}
+
+/* Subtle CRT Scanline overlay */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 38, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* Retro HUD corner decorations */
+.hud-corner-tl {
+  border-top: 3px solid var(--neon-cyan);
+  border-left: 3px solid var(--neon-cyan);
+}
+.hud-corner-tr {
+  border-top: 3px solid var(--neon-cyan);
+  border-right: 3px solid var(--neon-cyan);
+}
+.hud-corner-bl {
+  border-bottom: 3px solid var(--neon-cyan);
+  border-left: 3px solid var(--neon-cyan);
+}
+.hud-corner-br {
+  border-bottom: 3px solid var(--neon-cyan);
+  border-right: 3px solid var(--neon-cyan);
+}
+
+/* 8-bit text blinking */
+@keyframes retro-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.animate-retro-blink {
+  animation: retro-blink 1s infinite steps(1);
+}
+
+@keyframes float-stepped {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float-pixel {
+  animation: float-stepped 2.5s infinite steps(4);
+}
+
+/* Accessible High-Contrast Keyboard Focus */
+:focus-visible {
+  outline: 3px solid var(--neon-cyan) !important;
+  outline-offset: 2px;
+}
+
+/* Custom 16-Bit Pixel Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: var(--space-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--cosmic-purple);
+  border: 1px solid var(--space-black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--neon-cyan);
+}
+
+/* Accessibility: Prefers Reduced Motion Overrides */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-retro-blink {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .animate-float-pixel {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .scanlines {
+    display: none !important;
+  }
+}
